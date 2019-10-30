@@ -1,0 +1,164 @@
+<html>
+<head>
+    <title>Git For Subversion Users</title> </head>
+<body>
+<h2>Git For Subversion Users (at SlickEdit)</h2>
+<p>
+
+<hr size="4">
+<h3>"Everybody else is using Git, I guess we should too"</h3>
+</p>
+
+<h3>Getting Started</h3>
+<p>
+<h4>Things to know up front:</h4>
+        
+<ul>
+    <li>
+        <pre><code><b>trunk</b> is now <b>master</b> - Yes, it can actually be changed.  Don't try.  Just accept it.</code></pre>
+    </li>
+    
+</ul>
+</p>
+
+<h3>Cloning a Remote Repository</h3>
+If you don't already have a local clone of the repository, clone the entire repository:
+<pre><code>git clone ssh://license@git01.office.slickedit.com/git/license.git license</code></pre>
+
+<h3><a name="checkout_a_branch">Checkout a Branch</a> -- Worktrees</h3>
+Using worktrees allows you to have multiple source trees on different branches. 
+
+<pre><code>cd some-git-worktree</code>
+<code>git worktree add ~/temp/b24-00-00-fix b24-00-00-fix</code></pre>
+<B>Important:</b> DO NOT use --force.  You can only have one copy.  If you need more than one you will have to clone another copy of the repository.  If you use --force, it will checkout a second copy and appear to work, <i>but bad things will happen</i>.
+
+<h3>Display all Worktrees -- list locations on your machine where worktrees are checked out</h3>
+<pre><code>cd some-git-worktree</code>
+<code>git worktree list</code></pre>
+
+<h3>Display all Local Branches -- Display all local and locally tracked branches</h3>
+<pre><code>cd some-git-worktree</code>
+<code>git branch</code></pre>
+
+<h3>Display all Remote Branches</h3>
+<pre><code>cd some-git-worktree</code>
+<code>git branch -r</code></pre>
+<!--i>Notes:</i>origin/ is just a default.  It can be changed when -->
+
+<h3>Display all local and remote(tracked) branches</h3>
+<pre><code>cd some-git-worktree</code>
+<code>git branch -a </code></pre>
+<i>Note:</i> The branches labeled "/remotes" are being tracked remotely but are still in your local repository. The branches without a "/remotes" item listed are your purely local branches. Only the remotely tracked branches require you to <b>git push</b> or <b>git pull</b>. <b>git clone</b> can be used on a local worktree or a remote location.
+
+<h3>List Modified Files</h3>
+<pre><code>cd some-git-worktree</code>
+<code>git status</code></pre>
+
+<h3>Commit a Single File And Specify Comment in Local Repository</h3>
+<pre><code>cd some-git-worktree</code>
+<code>git commit file.cpp "added comment"</code></pre>
+
+<h3>Commit all files in Current Worktree in Local Repository</h3>
+<pre><code>cd some-git-worktree</code>
+<code>git commit -a -m "added comment"</code></pre>
+
+<h3>Commit Changes Into Remote Repository</h3>
+<pre><code>-- commit to local repository first -- see above </code>
+<code>git push</code></pre>
+
+<h3>Update Current Worktree - "svn update"</h3>
+<pre><code>cd some-git-worktree</code>
+<code>git pull</code></pre>
+
+<h3><a name="create_a_branch">Create a New Local Branch</a></h3>
+<pre><code>cd some-git-worktree</code>
+<code>git branch new-branch</code></pre>
+
+<h3>Create a New Remote Branch</h3>
+<pre><code>cd some-git-worktree
+git branch new-branch
+git push -u origin new-branch
+</code></pre>
+
+<h3><a name="delete_a_branch">Delete a Local Branch</a></h3>
+<pre><code>git -d branch
+</code></pre>
+
+<h3>Removing a Checked Out Worktree</h3>
+<pre><code>rm -rf some-git-worktree
+cd some-other-worktree
+git worktree prune
+</code></pre>
+<i>Note:</i>Be sure to run <b>git worktree prune</b> and not accidentally run <b>git prune</b>(another vaild command, neither requires aruments or gives any output), or git will still think that a branch is still checked out at some-git-worktree, even though some-git-worktree does not exist
+<h3>Reverting a File</h3>
+<pre><code>cd some-git-worktree
+git checkout -- file.cpp
+</code></pre>
+<B>DO NOT run <i>git revert</i> for this.  <i>git revert</i> actually reverts commits that have been made</b>
+
+<h3>Reverting All Changes</h3>
+<pre><code>cd some-git-worktree
+git reset --hard
+</code></pre>
+<B>DO NOT run <i>git revert</i> for this.  <i>git revert</i> actually reverts commits that have been made</b>
+
+<h3>Merge a Branch</h3>
+<pre><code>cd some-git-worktree
+git branch new-branch
+git push -u origin new-branch
+</code></pre>
+
+<h3>Create a New Remote Branch</h3>
+<pre><code>cd some-git-worktree
+git branch new-branch
+git push -u origin new-branch
+</code></pre>
+
+<h3>How to merge a branch</h3>
+<pre><code><i><b>Dan needs to fill this in</b></i></code></pre>
+
+<h3>How to resolve conflicts from a merge</h3>
+<pre><code><i><b>Dan needs to fill this in</b></i></code></pre>
+
+<h3>How to abort the current resolution and try to reconstruct the pre-merge state</h3>
+<pre><code><i><b>Dan needs to fill this in</b></i></code></pre>
+
+<h3>Checkout for a specific date - "svn checkout -r{date}"</h3>
+<h4>To do this in git, you have to get the hash for the date, then do a checkout of that hash.</h4>
+<pre><code>git rev-list -1 --before="2019-10-28" b24-00-00-fix
+
+a0b871e0d798c8130e0c8f834a3fe9823c36f70b (output from git rev-list)
+</code></pre>
+Once you have the hash, you can specify the hash instead of a branch name when adding a worktree. However, you can't check anything in.
+
+<pre><code>git worktree add ~/src/worktree-2019-10-28 a0b871e0d798c8130e0c8f834a3fe9823c36f70b</pre></code>
+
+
+<!--a name="branches_are_different">Branches are a bit different:</a>
+<ul>
+    <li>There are <b>untracked</b> branches, and <b>tracked</b> branches</li>
+        Untracked branches:
+        <ul> 
+            <li>Untracked branches only exist locally</li>
+            <ul>    
+                <li>In SVN branches are always initially created remotely with <b>svn cp</b> ex: "svn cp http://xyz/branches/b1 http://xyz/branches/b2"</li>
+                <li>In Git branches are always <a href="#create_a_branch">initially created</a> locally</li>
+                <li>Untracked branches only exist locally</li>
+                <ul>        
+                    <li>Local branches can be pushed to remote branches</li>
+                    <li>Why would I want a purely local branch?  One example:</li>
+                    <ul>        
+                        <li>You're on the master branch.  It has local changes, and the boss says "fix this bug"</li>
+                        <li><a href="#create_a_branch">Create a new (local) branch</a> tempBranchToFixBugX</li>
+                        <li><a href="#checkout_a_branch">checkout tempBranchToFixBugX</a></li>
+                        <li>Fix the bug</li>
+                        <li>checkout master</li>
+                        <li>merge tempBranchToFixBugX</li>
+                        <li>commit</li>
+                        <li>since it is purely local and there is no longer a need for it, <a href="#delete_a_branch">delete tempBranchToFixBugX</href></li>
+                         
+                    </ul>
+                </ul>
+            </ul>
+        </ul>
+</ul-->
