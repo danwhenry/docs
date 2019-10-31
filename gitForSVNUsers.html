@@ -69,7 +69,7 @@ Using worktrees allows you to have multiple source trees on different branches.
 <h3>Update Current Worktree - "svn update"</h3>
 <pre><code>cd some-git-worktree</code>
 <code>git pull</code></pre>
-
+<i>Note:</i>If there are conflicts for files you have not committed, <b>git pull</b> will NOT perform any actions. This is different that what subversion does. You first need to do one of the following:  commit your changes (<b>git commit file.cpp</b>), revert your changes (<b>git checkout file.cpp</b>), stash your changes, move them out of the way. Once you've done one of the previous steps, you can run <b>git pull</b>again and it will update your files. See "How to resolve conflicts" if you end up with conflicts to resolve.
 <h3><a name="create_a_branch">Create a New Local Branch</a></h3>
 <pre><code>cd some-git-worktree</code>
 <code>git branch new-branch</code></pre>
@@ -93,7 +93,7 @@ git worktree prune
 <i>Note:</i>Be sure to run <b>git worktree prune</b> and not accidentally run <b>git prune</b>(another vaild command, neither requires aruments or gives any output), or git will still think that a branch is still checked out at some-git-worktree, even though some-git-worktree does not exist
 <h3>Reverting a File</h3>
 <pre><code>cd some-git-worktree
-git checkout -- file.cpp
+git checkout file.cpp
 </code></pre>
 <B>DO NOT run <i>git revert</i> for this.  <i>git revert</i> actually reverts commits that have been made</b>
 
