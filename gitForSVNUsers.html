@@ -116,6 +116,21 @@ git branch new-branch
 git push -u origin new-branch
 </code></pre>
 
+<h3>How to find the date for a tag:</h3>
+<pre>run <code><b>git tag -v &lt;tag name&gt;</b></code><p>
+The output will look like:<p>
+<i>object <b>170d4f14fbdf49a0e8cd7a2d3830a02422c7ac52</b>
+type commit
+tag v25-00-01-gold
+tagger Dennis Brueni dbrueni@slickedit.com 1608230325 -0700</i><p>
+Take the hash from the object line and run:
+<code><b>git log -n1 &lt;hashFromObject&gt;</b></code><p>
+The output will look like:<p>
+commit 170d4f14fbdf49a0e8cd7a2d3830a02422c7ac52 (tag: v25-00-01-gold)
+Author: Dan Henry <dhenry@slickedit.com>
+Date:   <B><i>Wed Dec 16 14:55:01 2020 -0500</i></b></pre>
+
+
 <h3>How to merge a branch</h3>
 <pre><code><i><b>Dan needs to fill this in</b></i></code></pre>
 
